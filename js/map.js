@@ -1,3 +1,4 @@
+var map;
 function init(){
 	document.addEventListener("deviceready", onDeviceReady, false)
 }
@@ -13,12 +14,11 @@ function onOffline(){
 function onOnline(){
 	var myscript = document.createElement("script");
 	myscript.type = "text/javascript";
-	myscript.src = "https://maps.googleapis.com/maps/api/js?callback=getGeolocation";
+	myscript.src = "https://maps.googleapis.com/maps/api/js?callback=getCurrentLoc";
 	document.body.appendChild(myscript);
 }
-function getGeolocation(){
-	var options = {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true};
-	navigator.geolocation.watchPosition(initMap, geoError, options);
+function getCurrentLoc(){
+	navigator.geolocation.getCurrentPosition(initMap, geoError, options);
 }
 function initMap(position) {
 	var myLat = position.coords.latitude;
@@ -29,7 +29,21 @@ function initMap(position) {
 		zoom: 15
 	};			
 	var mapObj = document.getElementById("myMap");
-	var map = new google.maps.Map(mapObj, mapOptions);
+	map = new google.maps.Map(mapObj, mapOptions);
+	var pin;
+	pin = new google.maps.Marker({
+		position: latlong, 
+		map: map
+	});
+}
+function getGeolocation(){
+	var options = {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true};
+	navigator.geolocation.watchPosition(upDatePin, geoError, options);
+}
+function upDatePin(position){
+	var myLat = position.coords.latitude;
+	var myLong = position.coords.longitude;
+	var latlong = new google.maps.LatLng(myLat, myLong);
 	var pin;
 	pin = new google.maps.Marker({
 		position: latlong, 
