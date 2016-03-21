@@ -18,7 +18,7 @@ function onOnline(){
 	document.body.appendChild(myscript);
 }
 function getCurrentLoc(){
-	navigator.geolocation.getCurrentPosition(initMap, geoError, options);
+	navigator.geolocation.getCurrentPosition(initMap, geoError);
 }
 function initMap(position) {
 	var myLat = position.coords.latitude;
@@ -35,6 +35,7 @@ function initMap(position) {
 		position: latlong, 
 		map: map
 	});
+	getGeolocation();
 }
 function getGeolocation(){
 	var options = {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true};
