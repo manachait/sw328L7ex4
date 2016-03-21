@@ -1,4 +1,5 @@
 var map;
+var pin;
 function init(){
 	document.addEventListener("deviceready", onDeviceReady, false)
 }
@@ -29,8 +30,7 @@ function initMap(position) {
 		zoom: 15
 	};			
 	var mapObj = document.getElementById("myMap");
-	map = new google.maps.Map(mapObj, mapOptions);
-	var pin;
+	map = new google.maps.Map(mapObj, mapOptions);	
 	pin = new google.maps.Marker({
 		position: latlong, 
 		map: map
@@ -45,7 +45,7 @@ function upDatePin(position){
 	var myLat = position.coords.latitude;
 	var myLong = position.coords.longitude;
 	var latlong = new google.maps.LatLng(myLat, myLong);
-	var pin;
+	pin.setMap(null);
 	pin = new google.maps.Marker({
 		position: latlong, 
 		map: map
